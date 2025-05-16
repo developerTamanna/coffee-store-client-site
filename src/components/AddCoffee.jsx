@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
+import Swal from 'sweetalert2';
 
 const AddCoffee = () => {
 
@@ -14,17 +15,27 @@ const AddCoffee = () => {
 
     //send coffee data to the db
 
-    fetch('http://localhost:3000/coffees',{
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(newCoffee)
-    })
-    .then(res=>res.json())
-    .then(data=>{
-      console.log(' after adding coffee to db ',data)
-    })
+     fetch('http://localhost:3000/coffees', {
+    method: 'POST',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify(newCoffee),
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.insertedId) {
+        Swal.fire({
+          title: 'Success!',
+          text: 'New coffee added successfully!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+        });
+
+        form.reset();
+      }
+    });
+
    }
 
    return (
