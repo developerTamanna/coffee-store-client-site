@@ -2,6 +2,31 @@ import React from 'react';
 import { Link } from 'react-router';
 
 const AddCoffee = () => {
+
+   const handleAddCoffee = (e)=>{
+    e.preventDefault();
+    const form = e.target;
+    const formData = new FormData(form)
+    // console.log(formData.entries())
+      const newCoffee = Object.fromEntries(formData.entries()); 
+    console.log(newCoffee)
+
+
+    //send coffee data to the db
+
+    fetch('http://localhost:3000/coffees',{
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(newCoffee)
+    })
+    .then(res=>res.json())
+    .then(data=>{
+      console.log(' after adding coffee to db ',data)
+    })
+   }
+
    return (
     <div className="bg-[url('https://i.postimg.cc/WdZY7ry0/11.png')] min-h-screen py-10 px-4 flex justify-center items-center bg-cover bg-center">
       <div className="bg-white p-10 rounded-md shadow-md max-w-4xl w-full">
@@ -16,41 +41,83 @@ const AddCoffee = () => {
           The point of using Lorem Ipsum is that it has a more-or-less normal distribution of letters, as opposed to using Content here.
         </p>
 
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div>
-            <label className="block mb-1 text-sm font-medium">Name</label>
-            <input type="text" placeholder="Enter coffee name" className="w-full border border-gray-300 p-2 rounded" />
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium">Chef</label>
-            <input type="text" placeholder="Enter coffee chef" className="w-full border border-gray-300 p-2 rounded" />
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium">Supplier</label>
-            <input type="text" placeholder="Enter coffee supplier" className="w-full border border-gray-300 p-2 rounded" />
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium">Taste</label>
-            <input type="text" placeholder="Enter coffee taste" className="w-full border border-gray-300 p-2 rounded" />
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium">Category</label>
-            <input type="text" placeholder="Enter coffee category" className="w-full border border-gray-300 p-2 rounded" />
-          </div>
-          <div>
-            <label className="block mb-1 text-sm font-medium">Details</label>
-            <input type="text" placeholder="Enter coffee details" className="w-full border border-gray-300 p-2 rounded" />
-          </div>
-          <div className="md:col-span-2">
-            <label className="block mb-1 text-sm font-medium">Photo</label>
-            <input type="text" placeholder="Enter photo URL" className="w-full border border-gray-300 p-2 rounded" />
-          </div>
-          <div className="md:col-span-2">
-            <button type="submit" className="w-full bg-[#D2B48C] text-black py-2 font-semibold rounded hover:bg-[#c3a26e] transition">
-              Add Coffee
-            </button>
-          </div>
-        </form>
+        <form
+  onSubmit={handleAddCoffee}
+  className="grid grid-cols-1 md:grid-cols-2 gap-6"
+>
+  <div>
+    <label className="block mb-1 text-sm font-medium">Name</label>
+    <input
+      type="text"
+      name="name"
+      placeholder="Enter coffee name"
+      className="w-full border border-gray-300 p-2 rounded"
+    />
+  </div>
+  <div>
+    <label className="block mb-1 text-sm font-medium">Quantity</label>
+    <input
+      type="text"
+      name="quantity"
+      placeholder="Quantity name"
+      className="w-full border border-gray-300 p-2 rounded"
+    />
+  </div>
+  <div>
+    <label className="block mb-1 text-sm font-medium">Supplier</label>
+    <input
+      type="text"
+      name="supplier"
+      placeholder="Enter coffee supplier"
+      className="w-full border border-gray-300 p-2 rounded"
+    />
+  </div>
+  <div>
+    <label className="block mb-1 text-sm font-medium">Taste</label>
+    <input
+      type="text"
+      name="taste"
+      placeholder="Enter coffee taste"
+      className="w-full border border-gray-300 p-2 rounded"
+    />
+  </div>
+  <div>
+    <label className="block mb-1 text-sm font-medium">Category</label>
+    <input
+      type="text"
+      name="category"
+      placeholder="Enter coffee category"
+      className="w-full border border-gray-300 p-2 rounded"
+    />
+  </div>
+  <div>
+    <label className="block mb-1 text-sm font-medium">Details</label>
+    <input
+      type="text"
+      name="details"
+      placeholder="Enter coffee details"
+      className="w-full border border-gray-300 p-2 rounded"
+    />
+  </div>
+  <div className="md:col-span-2">
+    <label className="block mb-1 text-sm font-medium">Photo</label>
+    <input
+      type="text"
+      name="photo"
+      placeholder="Enter photo URL"
+      className="w-full border border-gray-300 p-2 rounded"
+    />
+  </div>
+  <div className="md:col-span-2">
+    <button
+      type="submit"
+      className="w-full bg-[#D2B48C] text-black py-2 font-semibold rounded hover:bg-[#c3a26e] transition"
+    >
+      Add Coffee
+    </button>
+  </div>
+</form>
+
       </div>
     </div>
   );
