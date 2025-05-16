@@ -93,11 +93,11 @@ const AddCoffee = () => {
     />
   </div>
   <div>
-    <label className="block mb-1 text-sm font-medium">Category</label>
+    <label className="block mb-1 text-sm font-medium">Price</label>
     <input
       type="text"
-      name="category"
-      placeholder="Enter coffee category"
+      name="price"
+      placeholder="Enter coffee Price"
       className="w-full border border-gray-300 p-2 rounded"
     />
   </div>
