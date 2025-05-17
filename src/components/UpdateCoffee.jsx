@@ -1,16 +1,49 @@
 import React from 'react';
 import { Link, useLoaderData } from 'react-router';
+  import Swal from 'sweetalert2';
 
 const UpdateCoffee = () => {
   const { _id, name, quantity, supplier, taste, price, details, photo } = useLoaderData();
     
-  const handleUpdateCoffee = (e) => {
-    e.preventDefault();
-    const form = e.target
-    const formData = new FormData(form)
-    const updatedCoffee = Object.fromEntries(formData.entries());
-    console.log(updatedCoffee)
-  };
+
+const handleUpdateCoffee = (e) => {
+  e.preventDefault();
+  const form = e.target;
+  const formData = new FormData(form);
+  const updatedCoffee = Object.fromEntries(formData.entries());
+  console.log(updatedCoffee);
+
+  // send updated coffee to the db
+  fetch(`http://localhost:3000/coffees/${_id}`, {
+    method: 'PUT',
+    headers: {
+      'content-type': 'application/json',
+    },
+    body: JSON.stringify(updatedCoffee),
+  })
+    .then(res => res.json())
+    .then(data => {
+      if (data.modifiedCount) {
+        // Sweet alert show
+        Swal.fire({
+          title: 'Success!',
+          text: 'Coffee updated successfully.',
+          icon: 'success',
+          confirmButtonText: 'Okay'
+        });
+      }
+    })
+    .catch(error => {
+      console.error('Error updating coffee:', error);
+      Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong while updating.',
+        icon: 'error',
+        confirmButtonText: 'Try Again'
+      });
+    });
+};
+
 
   return (
     <div className="bg-[url('https://i.postimg.cc/WdZY7ry0/11.png')] min-h-screen py-10 px-4 flex justify-center items-center bg-cover bg-center">
