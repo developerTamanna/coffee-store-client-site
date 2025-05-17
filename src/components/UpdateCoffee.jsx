@@ -1,8 +1,18 @@
 import React from 'react';
-import { Link } from 'react-router';
+import { Link, useLoaderData } from 'react-router';
 
 const UpdateCoffee = () => {
-    return (
+  const { _id, name, quantity, supplier, taste, price, details, photo } = useLoaderData();
+    
+  const handleUpdateCoffee = (e) => {
+    e.preventDefault();
+    const form = e.target
+    const formData = new FormData(form)
+    const updatedCoffee = Object.fromEntries(formData.entries());
+    console.log(updatedCoffee)
+  };
+
+  return (
     <div className="bg-[url('https://i.postimg.cc/WdZY7ry0/11.png')] min-h-screen py-10 px-4 flex justify-center items-center bg-cover bg-center">
       <div className="bg-white p-10 rounded-md shadow-md max-w-4xl w-full">
         <Link to="/" className="text-[#374151] font-semibold text-sm hover:underline mb-4 inline-block">
@@ -19,36 +29,67 @@ const UpdateCoffee = () => {
           to using Content here.
         </p>
 
-        <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <form onSubmit={handleUpdateCoffee} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div>
             <label className="block mb-1 text-sm font-medium">Name</label>
-            <input type="text" defaultValue="Americano Coffee" className="w-full border border-gray-300 p-2 rounded" />
+            <input
+              name="name"
+              type="text"
+              defaultValue={name}
+              className="w-full border border-gray-300 p-2 rounded"
+            />
           </div>
           <div>
-            <label className="block mb-1 text-sm font-medium">Chef</label>
-            <input type="text" defaultValue="Mr. Matin Paul" className="w-full border border-gray-300 p-2 rounded" />
+            <label className="block mb-1 text-sm font-medium">quantity</label>
+            <input
+              name="quantity"
+              type="text"
+              defaultValue={quantity}
+              className="w-full border border-gray-300 p-2 rounded"
+            />
           </div>
           <div>
             <label className="block mb-1 text-sm font-medium">Supplier</label>
-            <input type="text" defaultValue="Cappu Authorizer" className="w-full border border-gray-300 p-2 rounded" />
+            <input
+              name="supplier"
+              type="text"
+              defaultValue={supplier}
+              className="w-full border border-gray-300 p-2 rounded"
+            />
           </div>
           <div>
             <label className="block mb-1 text-sm font-medium">Taste</label>
-            <input type="text" defaultValue="Sweet and hot" className="w-full border border-gray-300 p-2 rounded" />
+            <input
+              name="taste"
+              type="text"
+              defaultValue={taste}
+              className="w-full border border-gray-300 p-2 rounded"
+            />
           </div>
           <div>
-            <label className="block mb-1 text-sm font-medium">Category</label>
-            <input type="text" defaultValue="Americano" className="w-full border border-gray-300 p-2 rounded" />
+            <label className="block mb-1 text-sm font-medium">Price</label>
+            <input
+              name="price"
+              type="text"
+              defaultValue={price}
+              className="w-full border border-gray-300 p-2 rounded"
+            />
           </div>
           <div>
             <label className="block mb-1 text-sm font-medium">Details</label>
-            <input type="text" defaultValue="Espresso with hot water" className="w-full border border-gray-300 p-2 rounded" />
+            <input
+              name="details"
+              type="text"
+              defaultValue={details}
+              className="w-full border border-gray-300 p-2 rounded"
+            />
           </div>
           <div className="md:col-span-2">
             <label className="block mb-1 text-sm font-medium">Photo</label>
             <input
+              name="photo"
               type="text"
-              defaultValue="https://i.ibb.co/PQqMPr9/11.png"
+              defaultValue={photo}
               className="w-full border border-gray-300 p-2 rounded"
             />
           </div>
