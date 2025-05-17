@@ -1,6 +1,7 @@
 import React, { use } from 'react';
 import { Link } from 'react-router';
 import { AuthContext } from '../contexts/AuthContext';
+import Swal from 'sweetalert2'
 
 const SignUp = () => {
 
@@ -29,11 +30,36 @@ const SignUp = () => {
     console.log(result.user)
 
     // save profile info in the db
-    
+    fetch('http://localhost:3000/users',{
+        method: 'POST',
+        headers: {
+            'content-type': 'application/json'
+        },
+        body: JSON.stringify(userProfile)
+    })
+    .then(res=> res.json())
+    .then(data=>{
+        // console.log('after profile save',data)
+        if(data.insertedId){
+                    Swal.fire({
+            title: 'Success!',
+            text: 'User profile saved successfully!',
+            icon: 'success',
+            confirmButtonText: 'OK'
+        });
+
+        }
+    })
+
    })
    .catch(error =>{
-    console.log(error)
-   })
+ console.log(error);
+    Swal.fire({
+        title: 'Error!',
+        text: 'Something went wrong!',
+        icon: 'error',
+        confirmButtonText: 'Try Again'
+    });   })
   }
 
     return (
@@ -119,16 +145,7 @@ const SignUp = () => {
   </div>
 
   {/* Confirm Password */}
-  <div>
-    <label className="block text-sm font-medium mb-1">Confirm Password</label>
-    <input
-      type="password"
-      name="confirmPassword"
-      required
-      className="w-full border px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-      placeholder="Re-type password"
-    />
-  </div>
+  
 
   {/* Submit Button */}
   <button
