@@ -22,7 +22,7 @@ const handleDelete = () => {
     if (result.isConfirmed) {
 
     //start deleting the coffee
-    fetch(`http://localhost:3000/coffees/${_id}`,{
+    fetch(`https://coffee-store-server-pi-navy.vercel.app/coffees/${_id}`,{
         method: 'DELETE'
     })
     .then(res=> res.json())

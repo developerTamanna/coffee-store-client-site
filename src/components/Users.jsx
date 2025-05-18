@@ -21,7 +21,7 @@ Swal.fire({
   if (result.isConfirmed) {
     //  delete works
 
-    fetch(`http://localhost:3000/users/${id}`,{
+    fetch(`https://coffee-store-server-pi-navy.vercel.app/users/${id}`,{
         method: 'DELETE'
     })
     .then(res=> res.json())
