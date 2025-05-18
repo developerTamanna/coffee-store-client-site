@@ -1,14 +1,54 @@
-import React from 'react';
+import React, { use } from 'react';
 import { FaGoogle } from 'react-icons/fa';
 import { Link } from 'react-router';
+import { AuthContext } from '../contexts/AuthContext';
 
 const SignIn = () => {
+    const {signInUser} = use(AuthContext)
+    const handleSign =(e)=>{
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value
+    const password = form.password.value;
+    console.log(email, password);
+
+    //firebase sign in send
+    signInUser(email, password)
+    .then(result=>{
+        console.log(result.user);
+         const signInInfo = {
+          email,
+          lastSignInTime: result.user?.metadata?.lastSignInTime
+
+
+         }
+        //update last sign in to the db
+
+        fetch('http://localhost:3000/users',{
+          method: 'PATCH',
+          headers: {
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify(signInInfo)
+        }).then(res=>res.json()).then(data=>{
+          console.log('after update',data)
+
+        })
+
+    })
+    .catch(error=>{
+        console.log(error)
+    })
+
+    }
     return (
         <div>
 <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-center mb-6">Login to your account</h2>
-        <form className="space-y-4">
+        <form
+        onSubmit={handleSign}
+        className="space-y-4">
           <div>
             <label className="block text-sm font-medium mb-1">Email</label>
             <input
